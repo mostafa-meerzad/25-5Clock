@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-
+import audio from "./assets/beep-6-96243.mp3"
 const App = () => {
   const initialBreakLength = 300;
   const initialSessionLength = 1500;
@@ -10,9 +10,9 @@ const App = () => {
   const [timer, setTimer] = useState(null);
   const [timerIntervalId, setTimerIntervalId] = useState(null);
   const [sessionType, setSessionType] = useState("session");
+  const sound = document.getElementById("beep")
 
   let hasStarted = timerIntervalId !== null; // check timer state
-  // const [hasStarted, setHasStarted] = useState(timerIntervalId)
   function secondsToTime(seconds) {
     return [Math.floor(seconds / 60), seconds % 60];
   }
@@ -31,12 +31,11 @@ const App = () => {
           let time = secondsToTime(newTime);
           setMinutes(time[0]);
           setSeconds(time[1]);
-          // console.log(`seconds ${time[1]} minutes ${time[0]} interval`);
           return newTime;
         });
       }, 1000);
       setTimerIntervalId(newIntervalId);
-      // console.log(`seconds ${time[1]} minutes ${time[0]} interval`)
+      
     }
   }
 
@@ -50,11 +49,16 @@ const App = () => {
     setTimer(1500);
     setSessionType("session");
     hasStarted = null;
+   
+    sound.pause()
+    sound.currentTime = 0
+
   };
 
   useEffect(
     () => {
       if (timer === 0) {
+        sound.play()
         if (sessionType === "session") {
           setSessionType("break");
           setTimer(breakLength + 1); // add one more to the breakLength to make the timer show the correct value          ;
@@ -129,7 +133,7 @@ const App = () => {
           className="timer-buttons__session-decrement"
           id="session-decrement"
           onClick={() => {
-            console.log(sessionLength);
+      
             hasStarted ||
               (sessionLength > 60 && setSessionLength(sessionLength - 60));
           }}
@@ -157,7 +161,6 @@ const App = () => {
         >
           Break -
         </button>
-        {/* </section> */}
 
         <button
           className="timer-buttons__reset"
@@ -171,9 +174,12 @@ const App = () => {
           id="start_stop"
           onClick={toggleCountDown}
         >
-          {hasStarted ? "stop" : "start"}
+          {hasStarted ? "Stop" : "Start"}
         </button>
       </section>
+      <audio src={audio} id="beep">beep</audio>
+
+ 
     </main>
   );
 };
