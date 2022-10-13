@@ -1,9 +1,181 @@
-import React from 'react'
+import { useEffect, useState } from "react";
 
 const App = () => {
-  return (
-    <div>App</div>
-  )
-}
+  const initialBreakLength = 300;
+  const initialSessionLength = 1500;
+  const [seconds, setSeconds] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [breakLength, setBreakLength] = useState(initialBreakLength);
+  const [sessionLength, setSessionLength] = useState(initialSessionLength);
+  const [timer, setTimer] = useState(null);
+  const [timerIntervalId, setTimerIntervalId] = useState(null);
+  const [sessionType, setSessionType] = useState("session");
 
-export default App
+  let hasStarted = timerIntervalId !== null; // check timer state
+  // const [hasStarted, setHasStarted] = useState(timerIntervalId)
+  function secondsToTime(seconds) {
+    return [Math.floor(seconds / 60), seconds % 60];
+  }
+
+  function toggleCountDown() {
+    if (hasStarted) {
+      // started mode
+      if (timerIntervalId) {
+        clearInterval(timerIntervalId);
+      }
+      setTimerIntervalId(null);
+    } else {
+      const newIntervalId = setInterval(() => {
+        setTimer(prevTime => {
+          let newTime = prevTime - 1;
+          let time = secondsToTime(newTime);
+          setMinutes(time[0]);
+          setSeconds(time[1]);
+          // console.log(`seconds ${time[1]} minutes ${time[0]} interval`);
+          return newTime;
+        });
+      }, 1000);
+      setTimerIntervalId(newIntervalId);
+      // console.log(`seconds ${time[1]} minutes ${time[0]} interval`)
+    }
+  }
+
+  const restToInitial = () => {
+    clearInterval(timerIntervalId);
+    setTimerIntervalId(null);
+    setSeconds(0);
+    setMinutes(25);
+    setBreakLength(initialBreakLength);
+    setSessionLength(initialSessionLength);
+    setTimer(1500);
+    setSessionType("session");
+    hasStarted = null;
+  };
+
+  useEffect(
+    () => {
+      if (timer === 0) {
+        if (sessionType === "session") {
+          setSessionType("break");
+          setTimer(breakLength + 1); // add one more to the breakLength to make the timer show the correct value          ;
+        } else if (sessionType === "break") {
+          setSessionType("session");
+          setTimer(sessionLength + 1); // add one more to the breakLength to make the timer show the correct value
+        }
+      }
+    },
+    [timer]
+  );
+
+  useEffect(
+    () => {
+      if (timer !== 0 && sessionType === "break") {
+        setMinutes(secondsToTime(breakLength)[0]);
+        setSeconds(secondsToTime(breakLength)[1]);
+        setTimer(breakLength);
+      } else if (timer !== 0 && sessionType === "session") {
+        setMinutes(secondsToTime(sessionLength)[0]);
+        setSeconds(secondsToTime(sessionLength)[1]);
+        setTimer(sessionLength);
+      }
+    },
+    [breakLength, sessionLength]
+  );
+
+  return (
+    <main className="timer">
+      <section className="timer__counter counter">
+        <span className="counter__label" id="timer-label">
+          {sessionType}
+        </span>
+
+        <div className="counter__time-left" id="time-left">
+          {/* format the timer value being displayed */}
+          {minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}
+        </div>
+        <div>
+          <section className="counter__section counter-section">
+            <span className="counter-section__label" id="session-label">
+              Session Length
+            </span>
+            <span className="counter-section__value" id="session-length">
+              {secondsToTime(sessionLength)[0]}
+            </span>
+          </section>
+
+          <section className="counter__section counter-section">
+            <span className="counter-section__label" id="break-label">
+              Break Length
+            </span>
+            <span id="break-length" className="counter-section__value">
+              {secondsToTime(breakLength)[0]}
+            </span>
+          </section>
+        </div>
+      </section>
+
+      <section className="timer__buttons timer-buttons">
+        <button
+          className="timer-buttons__session-increment"
+          id="session-increment"
+          onClick={() => {
+            hasStarted ||
+              (sessionLength < 3600 && setSessionLength(sessionLength + 60));
+          }}
+        >
+          Session +
+        </button>
+        <button
+          className="timer-buttons__session-decrement"
+          id="session-decrement"
+          onClick={() => {
+            console.log(sessionLength);
+            hasStarted ||
+              (sessionLength > 60 && setSessionLength(sessionLength - 60));
+          }}
+        >
+          Session -
+        </button>
+
+        <button
+          className="timer-buttons__break-increment"
+          id="break-increment"
+          onClick={() => {
+            hasStarted ||
+              (breakLength < 3600 && setBreakLength(breakLength + 60));
+          }}
+        >
+          Break +
+        </button>
+        <button
+          className="timer-buttons__break-decrement"
+          id="break-decrement"
+          onClick={() => {
+            hasStarted ||
+              (breakLength > 60 && setBreakLength(breakLength - 60));
+          }}
+        >
+          Break -
+        </button>
+        {/* </section> */}
+
+        <button
+          className="timer-buttons__reset"
+          id="reset"
+          onClick={restToInitial}
+        >
+          Reset
+        </button>
+        <button
+          className="timer-buttons__start-stop"
+          id="start_stop"
+          onClick={toggleCountDown}
+        >
+          {hasStarted ? "stop" : "start"}
+        </button>
+      </section>
+    </main>
+  );
+};
+
+export default App;
