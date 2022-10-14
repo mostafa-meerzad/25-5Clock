@@ -1,0 +1,233 @@
+.counter {
+  color: #CCCCCC;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.counter__label {
+  font-weight: bold;
+  font-size: 1.5em;
+  grid-column: 2/3;
+  grid-row: 2/3;
+  position: absolute;
+  top: 3.5rem;
+  color: #73737e;
+}
+.counter__time-left {
+  font-family: Roboto, sans-serif;
+  font-size: 5.5em;
+  font-weight: 100;
+  position: absolute;
+  margin: 0 auto;
+  top: 7rem;
+}
+.counter__parameters {
+  position: absolute;
+  top: 15rem;
+  display: flex;
+  gap: 2em;
+}
+
+.counter-parameter {
+  display: flex;
+  flex-direction: column;
+  color: #73737e;
+  font-weight: bold;
+}
+.counter-parameter__label {
+  font-size: 0.9em;
+}
+.counter-parameter__value {
+  font-size: 1.4em;
+}
+
+.counter-circle {
+  width: 23rem;
+  height: 23rem;
+  border: 2px solid red;
+}
+.counter-circle__main {
+  border: 5px solid #73737e;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  position: absolute;
+}
+.counter-circle__cover {
+  width: 50%;
+  height: 50%;
+  transform-origin: bottom right;
+  position: absolute;
+  border-top-left-radius: 100%;
+  transition: transform 10s linear;
+  border-top: 5px solid #FDA006;
+  border-left: 5px solid #FDA006;
+  border: 1px solid red;
+}
+.counter-circle__cover--first.active {
+  transform: rotate(90deg);
+  border: 4px solid blue;
+}
+.counter-circle__cover--second.active {
+  transform: rotate(180deg);
+}
+.counter-circle__cover--third.active {
+  transform: rotate(270deg);
+}
+.counter-circle__cover--fourth {
+  transform: rotate(360deg);
+  border: 4px solid red;
+}
+.counter-circle__cover--fourth::after {
+  content: "";
+  width: 13px;
+  height: 13px;
+  background-color: red;
+  position: absolute;
+  border-radius: 50%;
+  top: -10px;
+  right: 0px;
+}
+.counter-circle__cover--first-cover.active {
+  z-index: 1;
+  transform: rotate(90deg);
+  transition: transform 5s 5s linear;
+  border-color: #73737e;
+  z-index: 1;
+}
+.counter-circle__cover--second-cover.active {
+  transform: rotate(90deg);
+  transition: none;
+  opacity: 0;
+  z-index: 2;
+  -webkit-animation: cover 1s linear 2.5s forwards;
+          animation: cover 1s linear 2.5s forwards;
+}
+
+@-webkit-keyframes cover {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes cover {
+  to {
+    opacity: 1;
+  }
+}
+.timer-buttons {
+  display: grid;
+  z-index: 0;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 1rem;
+  top: -1.3rem;
+}
+.timer-buttons__button {
+  color: #CCCCCC;
+  background-color: #1c1c22;
+  width: 3.5rem;
+  height: 3.5rem;
+  padding-top: 0.3rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 0.7rem;
+  border: 2px solid #000000;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  gap: 0.3rem;
+}
+.timer-buttons__button svg {
+  width: 0.5rem;
+  height: 0.5rem;
+  fill: currentColor;
+}
+.timer-buttons__button:active {
+  background-color: rgba(18, 97, 18, 0.301);
+  color: rgba(23, 172, 23, 0.849);
+}
+.timer-buttons__button:active::before {
+  background-color: rgba(18, 97, 18, 0.301);
+}
+.timer-buttons__button::before {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  width: 115%;
+  height: 115%;
+  background-color: #1c1c22;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
+.timer-buttons__session-increment {
+  grid-column: 1/2;
+  grid-row: 1/2;
+}
+.timer-buttons__session-decrement {
+  grid-column: 1/2;
+  grid-row: 2/3;
+}
+.timer-buttons__break-increment {
+  grid-column: 5/6;
+  grid-row: 1/2;
+}
+.timer-buttons__break-decrement {
+  grid-column: 5/6;
+  grid-row: 2/3;
+}
+.timer-buttons__reset {
+  grid-column: 2/3;
+  grid-row: 1/3;
+}
+.timer-buttons__start-stop {
+  grid-column: 4/5;
+  grid-row: 1/3;
+}
+.timer-buttons__start-stop, .timer-buttons__reset {
+  padding: 0;
+  font-size: 0.9em;
+  align-self: center;
+}
+
+@font-face {
+  font-family: Nexa;
+  src: url("../assets/Nexa-font/Nexa-Light.otf");
+}
+@font-face {
+  font-family: Roboto;
+  src: url("../assets/Roboto/Roboto-Light.ttf");
+  src: url("../assets/Roboto/Roboto-Medium.ttf");
+  src: url("../assets/Roboto/Roboto-Thin.ttf");
+}
+* {
+  box-sizing: border-box;
+  position: relative;
+}
+
+body {
+  font-family: Nexa, sans-serif;
+  background-image: linear-gradient(45deg, #000000, #73737e);
+  background-repeat: no-repeat;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  place-content: center;
+  color: #fff;
+}
+
+.timer {
+  background-color: #000000;
+  text-align: center;
+  padding: 5rem 1.5rem;
+  border-radius: 10px;
+}/*# sourceMappingURL=style.css.map */

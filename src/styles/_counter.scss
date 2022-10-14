@@ -1,0 +1,146 @@
+@use "./variables";
+
+$timer-len: 10;
+.counter {
+  color: variables.$gray;
+  padding: 0 ;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+
+  &__label {
+    font-weight: bold;
+    font-size: 1.5em;
+    grid-column: 2/3;
+    grid-row: 2/3;
+    // top: 50%;
+    position: absolute;
+    top: 3.5rem;
+    color: variables.$dark-gray;
+  }
+  &__time-left {
+    font-family: Roboto, sans-serif;
+    font-size: 5.5em;
+    font-weight: 100;
+    position: absolute;
+    margin: 0 auto;
+    top: 7rem;
+    // grid-column: 2/3;
+    // grid-row: 2/3;
+  }
+  &__parameters {
+    position: absolute;
+    top: 15rem;
+    display: flex;
+    gap: 2em;
+  }
+}
+.counter-parameter {
+  display: flex;
+  flex-direction: column;
+  color: variables.$dark-gray;
+  font-weight: bold;
+  &__label {
+    font-size: 0.9em;
+    // font-family: Roboto;
+
+  }
+  &__value {
+    // font-family: Roboto;
+    font-size: 1.4em;
+  }
+}
+
+
+.counter-circle {
+    $border-size: 5px;
+  width: 23rem;
+  height: 23rem;
+  border: 2px solid red;
+
+  &__main {
+    border: $border-size solid variables.$dark-gray;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    position: absolute;
+  }
+
+  &__cover {
+    width: 50%;
+    height: 50%;
+    transform-origin: bottom right;
+    position: absolute;
+    border-top-left-radius: 100%;
+    transition: transform calc($timer-len * 1s) linear;
+    border-top: $border-size solid variables.$dark-yellow;
+    border-left: $border-size solid variables.$dark-yellow;
+    border: 1px solid red;
+
+    &--first.active {
+      transform: rotate(90deg);
+      border: 4px solid blue;
+    }
+    &--second.active  {
+      transform: rotate(180deg);
+    }
+    &--third.active {
+      transform: rotate(270deg);
+    }
+    &--fourth {
+      transform: rotate(360deg);
+      border: 4px solid red;
+      &::after {
+        // the dot in timer-circle 
+        // 3 the dot in timer-circle 
+        content: "";
+        width: 13px;
+        height: 13px;
+        background-color: red;
+        position: absolute;
+        border-radius: 50%;
+        top: -10px;
+        right: 0px;
+      }
+    }
+   
+
+    &--first-cover.active {
+      z-index: 1;
+      transform: rotate(90deg);
+      transition: transform calc($timer-len / 2 * 1s) calc($timer-len / 2 * 1s)
+        linear;
+      border-color: variables.$dark-gray;
+      z-index: 1;
+    }
+    &--second-cover.active {
+      transform: rotate(90deg);
+      transition: none;
+      opacity: 0;
+      z-index: 2;
+      animation: cover calc($timer-len / $timer-len * 1s) linear
+        calc($timer-len / 4 * 1s) forwards;
+    }
+  }
+
+}
+
+
+
+// .counter-circle.active .counter-circle__cover{
+//   // &__cover{
+
+//     border: 10px solid red;
+//   // }
+//   transition: transform calc($timer-len * 1s) linear;
+
+
+// }
+
+@keyframes cover {
+  to {
+    opacity: 1;
+  }
+}
