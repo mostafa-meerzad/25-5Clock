@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import audio from "./assets/beep-6-96243.mp3"
+import audio from "./assets/beep-6-96243.mp3";
+import { Minus, Plus } from "./assets/images";
 const App = () => {
   const initialBreakLength = 300;
   const initialSessionLength = 1500;
@@ -10,7 +11,7 @@ const App = () => {
   const [timer, setTimer] = useState(null);
   const [timerIntervalId, setTimerIntervalId] = useState(null);
   const [sessionType, setSessionType] = useState("session");
-  const sound = document.getElementById("beep")
+  const sound = document.getElementById("beep");
 
   let hasStarted = timerIntervalId !== null; // check timer state
   function secondsToTime(seconds) {
@@ -35,7 +36,6 @@ const App = () => {
         });
       }, 1000);
       setTimerIntervalId(newIntervalId);
-      
     }
   }
 
@@ -49,16 +49,15 @@ const App = () => {
     setTimer(1500);
     setSessionType("session");
     hasStarted = null;
-   
-    sound.pause()
-    sound.currentTime = 0
 
+    sound.pause();
+    sound.currentTime = 0;
   };
 
   useEffect(
     () => {
       if (timer === 0) {
-        sound.play()
+        sound.play();
         if (sessionType === "session") {
           setSessionType("break");
           setTimer(breakLength + 1); // add one more to the breakLength to make the timer show the correct value          ;
@@ -93,25 +92,35 @@ const App = () => {
           {sessionType}
         </span>
 
+        <div className="counter__circle counter-circle ">
+          <div className="counter-circle__main" />
+          <div className="counter-circle__cover   counter-circle__cover--first active" />
+          <div className="counter-circle__cover  counter-circle__cover--second active" />
+          <div className="counter-circle__cover counter-circle__cover--third active" />
+          <div className="counter-circle__cover counter-circle__cover--fourth active" />
+          <div className="counter-circle__cover counter-circle__cover--first-cover active" />
+          <div className="counter-circle__cover  counter-circle__cover--second-cover active" />
+        </div>
+
         <div className="counter__time-left" id="time-left">
           {/* format the timer value being displayed */}
           {minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}
         </div>
-        <div>
-          <section className="counter__section counter-section">
-            <span className="counter-section__label" id="session-label">
+        <div className="counter__parameters">
+          <section className="counter-parameter">
+            <span className="counter-parameter__label" id="session-label">
               Session Length
             </span>
-            <span className="counter-section__value" id="session-length">
+            <span className="counter-parameter__value" id="session-length">
               {secondsToTime(sessionLength)[0]}
             </span>
           </section>
 
-          <section className="counter__section counter-section">
-            <span className="counter-section__label" id="break-label">
+          <section className="counter-parameter">
+            <span className="counter-parameter__label" id="break-label">
               Break Length
             </span>
-            <span id="break-length" className="counter-section__value">
+            <span id="break-length" className="counter-parameter__value">
               {secondsToTime(breakLength)[0]}
             </span>
           </section>
@@ -120,68 +129,91 @@ const App = () => {
 
       <section className="timer__buttons timer-buttons">
         <button
-          className="timer-buttons__session-increment"
+          className="timer-buttons__button timer-buttons__session-increment"
           id="session-increment"
           onClick={() => {
             hasStarted ||
               (sessionLength < 3600 && setSessionLength(sessionLength + 60));
           }}
         >
-          Session +
+          Session 
+          <Plus/>
+
         </button>
         <button
-          className="timer-buttons__session-decrement"
+          className="timer-buttons__button timer-buttons__session-decrement"
           id="session-decrement"
           onClick={() => {
-      
             hasStarted ||
               (sessionLength > 60 && setSessionLength(sessionLength - 60));
           }}
         >
-          Session -
+          Session
+
+          <Minus/>
         </button>
 
         <button
-          className="timer-buttons__break-increment"
+          className="timer-buttons__button timer-buttons__break-increment"
           id="break-increment"
           onClick={() => {
             hasStarted ||
               (breakLength < 3600 && setBreakLength(breakLength + 60));
           }}
         >
-          Break +
+          Break 
+          <Plus/>
         </button>
         <button
-          className="timer-buttons__break-decrement"
+          className="timer-buttons__button timer-buttons__break-decrement"
           id="break-decrement"
           onClick={() => {
             hasStarted ||
               (breakLength > 60 && setBreakLength(breakLength - 60));
           }}
         >
-          Break -
+           Break
+          <Minus/>
+
+
+
         </button>
 
         <button
-          className="timer-buttons__reset"
+          className="timer-buttons__button timer-buttons__reset"
           id="reset"
           onClick={restToInitial}
         >
           Reset
         </button>
         <button
-          className="timer-buttons__start-stop"
+          className="timer-buttons__button timer-buttons__start-stop"
           id="start_stop"
           onClick={toggleCountDown}
         >
           {hasStarted ? "Stop" : "Start"}
         </button>
       </section>
-      <audio src={audio} id="beep">beep</audio>
+      <audio src={audio} id="beep" />
 
- 
+      {/* <button onClick={() => {
+        let elem = document.querySelectorAll(".counter-circle__cover")
+        // elem.forEach((item) => {
+          // item.classList.toggle("active")
+         
+          // item.style.transition = 'transform'
+
+
+        // })
+        console.log(elem)
+    
+
+
+
+      }}>toggle</button> */}
     </main>
   );
 };
 
 export default App;
+  
