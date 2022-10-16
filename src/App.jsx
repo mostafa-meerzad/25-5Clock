@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import audio from "./assets/beep-6-96243.mp3";
 import { Minus, Plus } from "./assets/images";
+import Button from "./components/Button";
+
+
 const App = () => {
   const initialBreakLength = 300;
   const initialSessionLength = 1500;
@@ -14,6 +17,7 @@ const App = () => {
   const sound = document.getElementById("beep");
 
   let hasStarted = timerIntervalId !== null; // check timer state
+
   function secondsToTime(seconds) {
     return [Math.floor(seconds / 60), seconds % 60];
   }
@@ -52,7 +56,26 @@ const App = () => {
 
     sound.pause();
     sound.currentTime = 0;
+
+    
   };
+
+  const sessionIncrement = () => {
+    hasStarted ||
+      (sessionLength < 3600 && setSessionLength(sessionLength + 60));
+  }
+  const sessionDecrement = () => {
+    hasStarted ||
+      (sessionLength > 60 && setSessionLength(sessionLength - 60));
+  }
+  const breakIncrement = () => {
+    hasStarted ||
+      (breakLength < 3600 && setBreakLength(breakLength + 60));
+  }
+  const breakDecrement = () => {
+    hasStarted ||
+      (breakLength > 60 && setBreakLength(breakLength - 60));
+  }
 
   useEffect(
     () => {
@@ -92,14 +115,16 @@ const App = () => {
           {sessionType}
         </span>
 
-        <div className="counter__circle counter-circle ">
-          <div className="counter-circle__main" />
-          <div className="counter-circle__cover   counter-circle__cover--first active" />
-          <div className="counter-circle__cover  counter-circle__cover--second active" />
-          <div className="counter-circle__cover counter-circle__cover--third active" />
-          <div className="counter-circle__cover counter-circle__cover--fourth active" />
-          <div className="counter-circle__cover counter-circle__cover--first-cover active" />
-          <div className="counter-circle__cover  counter-circle__cover--second-cover active" />
+
+        <div className="counter__circle circle">
+          <div className="circle__main-circle main-circle">
+            {/* <div className="main-circle__cover main-circle__cover--first" />
+            <div className="main-circle__cover main-circle__cover--second" />
+            <div className="main-circle__cover main-circle__cover--third" />
+            <div className="main-circle__cover main-circle__cover--fourth" />
+            <div className="main-circle__cover main-circle__cover--first-cover" />
+            <div className="main-circle__cover main-circle__cover--second-cover" /> */}
+          </div>
         </div>
 
         <div className="counter__time-left" id="time-left">
@@ -128,6 +153,7 @@ const App = () => {
       </section>
 
       <section className="timer__buttons timer-buttons">
+     
         <button
           className="timer-buttons__button timer-buttons__session-increment"
           id="session-increment"
@@ -136,9 +162,8 @@ const App = () => {
               (sessionLength < 3600 && setSessionLength(sessionLength + 60));
           }}
         >
-          Session 
-          <Plus/>
-
+          Session
+          <Plus />
         </button>
         <button
           className="timer-buttons__button timer-buttons__session-decrement"
@@ -149,8 +174,7 @@ const App = () => {
           }}
         >
           Session
-
-          <Minus/>
+          <Minus />
         </button>
 
         <button
@@ -161,8 +185,8 @@ const App = () => {
               (breakLength < 3600 && setBreakLength(breakLength + 60));
           }}
         >
-          Break 
-          <Plus/>
+          Break
+          <Plus />
         </button>
         <button
           className="timer-buttons__button timer-buttons__break-decrement"
@@ -172,11 +196,8 @@ const App = () => {
               (breakLength > 60 && setBreakLength(breakLength - 60));
           }}
         >
-           Break
-          <Minus/>
-
-
-
+          Break
+          <Minus />
         </button>
 
         <button
@@ -190,30 +211,14 @@ const App = () => {
           className="timer-buttons__button timer-buttons__start-stop"
           id="start_stop"
           onClick={toggleCountDown}
+    
         >
           {hasStarted ? "Stop" : "Start"}
         </button>
       </section>
       <audio src={audio} id="beep" />
-
-      {/* <button onClick={() => {
-        let elem = document.querySelectorAll(".counter-circle__cover")
-        // elem.forEach((item) => {
-          // item.classList.toggle("active")
-         
-          // item.style.transition = 'transform'
-
-
-        // })
-        console.log(elem)
-    
-
-
-
-      }}>toggle</button> */}
     </main>
   );
 };
 
 export default App;
-  

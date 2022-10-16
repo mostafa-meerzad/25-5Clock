@@ -14,6 +14,7 @@
   position: absolute;
   top: 3.5rem;
   color: #73737e;
+  z-index: 1;
 }
 .counter__time-left {
   font-family: Roboto, sans-serif;
@@ -22,12 +23,14 @@
   position: absolute;
   margin: 0 auto;
   top: 7rem;
+  z-index: 1;
 }
 .counter__parameters {
   position: absolute;
   top: 15rem;
   display: flex;
   gap: 2em;
+  z-index: 1;
 }
 
 .counter-parameter {
@@ -43,80 +46,31 @@
   font-size: 1.4em;
 }
 
-.counter-circle {
+.circle {
   width: 23rem;
   height: 23rem;
-  border: 2px solid red;
+  z-index: 0;
 }
-.counter-circle__main {
-  border: 5px solid #73737e;
+
+.main-circle {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  position: absolute;
+  background-color: #FDA006;
 }
-.counter-circle__cover {
-  width: 50%;
-  height: 50%;
-  transform-origin: bottom right;
-  position: absolute;
-  border-top-left-radius: 100%;
-  transition: transform 10s linear;
-  border-top: 5px solid #FDA006;
-  border-left: 5px solid #FDA006;
-  border: 1px solid red;
-}
-.counter-circle__cover--first.active {
-  transform: rotate(90deg);
-  border: 4px solid blue;
-}
-.counter-circle__cover--second.active {
-  transform: rotate(180deg);
-}
-.counter-circle__cover--third.active {
-  transform: rotate(270deg);
-}
-.counter-circle__cover--fourth {
-  transform: rotate(360deg);
-  border: 4px solid red;
-}
-.counter-circle__cover--fourth::after {
+.main-circle::after {
   content: "";
-  width: 13px;
-  height: 13px;
-  background-color: red;
+  width: 97%;
+  height: 97%;
   position: absolute;
+  background-color: black;
   border-radius: 50%;
-  top: -10px;
-  right: 0px;
-}
-.counter-circle__cover--first-cover.active {
-  z-index: 1;
-  transform: rotate(90deg);
-  transition: transform 5s 5s linear;
-  border-color: #73737e;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
   z-index: 1;
 }
-.counter-circle__cover--second-cover.active {
-  transform: rotate(90deg);
-  transition: none;
-  opacity: 0;
-  z-index: 2;
-  -webkit-animation: cover 1s linear 2.5s forwards;
-          animation: cover 1s linear 2.5s forwards;
-}
 
-@-webkit-keyframes cover {
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes cover {
-  to {
-    opacity: 1;
-  }
-}
 .timer-buttons {
   display: grid;
   z-index: 0;
@@ -199,22 +153,22 @@
 }
 
 @font-face {
-  font-family: Nexa;
-  src: url("../assets/Nexa-font/Nexa-Light.otf");
-}
-@font-face {
   font-family: Roboto;
   src: url("../assets/Roboto/Roboto-Light.ttf");
   src: url("../assets/Roboto/Roboto-Medium.ttf");
   src: url("../assets/Roboto/Roboto-Thin.ttf");
 }
+:root {
+  --timer-len: 10;
+}
+
 * {
   box-sizing: border-box;
   position: relative;
 }
 
 body {
-  font-family: Nexa, sans-serif;
+  font-family: Roboto, sans-serif;
   background-image: linear-gradient(45deg, #000000, #73737e);
   background-repeat: no-repeat;
   height: 100vh;
