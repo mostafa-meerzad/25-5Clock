@@ -1,6 +1,7 @@
 @use "./variables";
 
-$timer-len: 10;
+
+
 .counter {
   color: variables.$gray;
   padding: 0 ;
@@ -19,6 +20,7 @@ $timer-len: 10;
     position: absolute;
     top: 3.5rem;
     color: variables.$dark-gray;
+    z-index: 1;
   }
   &__time-left {
     font-family: Roboto, sans-serif;
@@ -27,14 +29,15 @@ $timer-len: 10;
     position: absolute;
     margin: 0 auto;
     top: 7rem;
-    // grid-column: 2/3;
-    // grid-row: 2/3;
+    z-index: 1;
   }
   &__parameters {
     position: absolute;
     top: 15rem;
     display: flex;
     gap: 2em;
+    z-index: 1;
+
   }
 }
 .counter-parameter {
@@ -54,93 +57,294 @@ $timer-len: 10;
 }
 
 
-.counter-circle {
-    $border-size: 5px;
-  width: 23rem;
-  height: 23rem;
-  border: 2px solid red;
+// .counter-circle {
+//   //   $border-size: .5rem;
+//   // width: 23rem;
+//   // height: 23rem;
+//   // // border: 2px solid red;
+//   border: 2px solid red;
+//   width: 15rem;
+//   height: 15rem;
 
-  &__main {
-    border: $border-size solid variables.$dark-gray;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    position: absolute;
-  }
+//   &__main {
+//     border: 8px solid variables.$dark-gray;
+//     // border: $border-size solid variables.$dark-gray;
+//     width: 100%;
+//     height: 100%;
+//     border-radius: 50%;
+//     position: absolute;
+//   }
 
-  &__cover {
-    width: 50%;
-    height: 50%;
-    transform-origin: bottom right;
-    position: absolute;
-    border-top-left-radius: 100%;
-    transition: transform calc($timer-len * 1s) linear;
-    border-top: $border-size solid variables.$dark-yellow;
-    border-left: $border-size solid variables.$dark-yellow;
-    border: 1px solid red;
-
-    &--first.active {
-      transform: rotate(90deg);
-      border: 4px solid blue;
-    }
-    &--second.active  {
-      transform: rotate(180deg);
-    }
-    &--third.active {
-      transform: rotate(270deg);
-    }
-    &--fourth {
-      transform: rotate(360deg);
-      border: 4px solid red;
-      &::after {
-        // the dot in timer-circle 
-        // 3 the dot in timer-circle 
-        content: "";
-        width: 13px;
-        height: 13px;
-        background-color: red;
-        position: absolute;
-        border-radius: 50%;
-        top: -10px;
-        right: 0px;
-      }
-    }
+//   &__cover {
+//     width: 50%;
+//     height: 50%;
+//     transform-origin: bottom right;
+//     position: absolute;
+//     border-top-left-radius: 100%;
+//     transition: transform calc(var(--timer-len) * 1s) linear;
+//     border-top: $border-size solid variables.$dark-yellow;
+//     border-left: $border-size solid variables.$dark-yellow;
+//     // border: 1px solid red;
+//     &--fourth {
+//       // transform: rotate(360deg);
+//       // border: 4px solid red;
+//       // z-index: 4;
+//       &::after {
+//         // the dot in timer-circle 
+//         // 3 the dot in timer-circle 
+//         content: "";
+//         width: 13px;
+//         height: 13px;
+//         // background-color: variables.$dark-yellow;
+//         background-color: red;
+//         position: absolute;
+//         border-radius: 50%;
+//         top: -5.8%;
+//         right: -5%;
+//       }
+//     }
+//     &--first-cover {
    
 
-    &--first-cover.active {
-      z-index: 1;
-      transform: rotate(90deg);
-      transition: transform calc($timer-len / 2 * 1s) calc($timer-len / 2 * 1s)
-        linear;
-      border-color: variables.$dark-gray;
-      z-index: 1;
-    }
-    &--second-cover.active {
-      transform: rotate(90deg);
-      transition: none;
-      opacity: 0;
-      z-index: 2;
-      animation: cover calc($timer-len / $timer-len * 1s) linear
-        calc($timer-len / 4 * 1s) forwards;
-    }
-  }
+//       // z-index: ;
+//       // transform: rotate(90deg);
+//       // transition: transform calc(var(--timer-len) / 2 * 1s) calc(var(--timer-len) / 2 * 1s)
 
-}
+//       // animation: first-cover calc(var(--timer-len) / 2 * 1s) linear calc(var(--timer-len) / 2 * 1s) forwards;
+//       // transition: transform calc(var(--timer-len) / 2 * 1s) calc(var(--timer-len) / 2 * 1s)
+//         // linear;
+//         border-color: variables.$dark-gray;
+//         // border-color: red;
+//       // border: 6px solid ;
+//       // border-top: px solid red;
+//       // border-left: px solid red;
+    
+//       z-index: 0;
+//       // mask-border-outset: $black;
+//     }
+//     &--second-cover {
+   
 
+//       // transform: rotate(90deg);
+//       // transition: none;
+//       // opacity: 0;
+//       z-index: 2;
+//       // border-color: red;
+//       // animation: second-cover, second-cover-opacity calc(var(--timer-len)/var(--timer-len) * 1s) linear calc(var(--timer-len) / 4 * 1s)  forwards;
 
+//       // animation: second-cover calc(var(--timer-len) / var(--timer-len) * 1s) linear
+//       //   calc(var(--timer-len) / 4 * 1s) forwards;
+//       // animation: second-cover, second-cover-opacity 2s, 1s linear 2s, 3s;
+//       opacity: 0;
+//       // animation-name: second-cover;
+//       // animation-duration: 0s, calc(var(--timer-len) / 2 * 1s);
+//       // animation-duration: 0s;
+//       // animation-timing-function: linear;
+//       // animation-delay: calc(var(--timer-len)/2 * 1s) ;
+//       // animation-delay: calc(var(--timer-len) * 4s) calc(var(--timer-len) * 6s);
+//       // border-color: red;
+//       // animation-iteration-count: 1;
+//       // animation-fill-mode: forwards;
+//       transform: rotate(90deg);
+//       // animation: second-cover 0s linear calc(var(--timer-len) / 2 * 1s) forwards;
 
-// .counter-circle.active .counter-circle__cover{
-//   // &__cover{
+//     }
 
-//     border: 10px solid red;
-//   // }
-//   transition: transform calc($timer-len * 1s) linear;
+//     &--first.active {
+//       // transform: rotate(90deg);
+//       // border: 4px solid blue;
+//       animation: first calc(var(--timer-len) * 1s) linear forwards;
 
+//     }
+//     &--second.active  {
+//       // transform: rotate(180deg);
+//       animation: second calc(var(--timer-len) * 1s)  linear forwards;
+
+//     }
+//     &--third.active {
+//       // transform: rotate(270deg);
+//       animation: third calc(var(--timer-len) * 1s)  linear forwards;
+
+//     }
+ 
+//     &--fourth.active{
+//       animation: fourth calc(var(--timer-len) * 1s) linear forwards;
+
+//     }
+   
+  
+//     &--first-cover.active {
+//       // z-index: 1;
+//       // transform: rotate(90deg);
+//       // transition: transform calc(var(--timer-len) / 2 * 1s) calc(var(--timer-len) / 2 * 1s)
+//         // linear;
+//       // border-color: variables.$dark-gray;
+//       // z-index: 1;
+//       animation: first-cover calc(var(--timer-len) / 2 * 1s) linear calc(var(--timer-len) / 2 * 1s) forwards;
+
+//     }
+
+   
+//     &--second-cover.active {
+//       // transform: rotate(90deg);
+//       // transition: none;
+//       // opacity: 0;
+//       // z-index: 2;
+//       // animation: cover calc(var(--timer-len) / var(--timer-len) * 1s) linear
+//         // calc(var(--timer-len) / 4 * 1s) forwards;
+//       animation: second-cover 0s linear calc(var(--timer-len) / 2 * 1s) forwards;
+
+//     }
+//   }
 
 // }
+//--------------------------------------
+.circle {
+  // border: 2px solid red;
+  width: 23rem;
+  height: 23rem;
+  z-index: 0;
+}
 
-@keyframes cover {
-  to {
-    opacity: 1;
+
+.main-circle {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: variables.$dark-yellow;
+
+  &::after {
+    content: "";
+    width: 97%;
+    height: 97%;
+    position: absolute;
+    background-color: black;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    z-index: 1;
   }
 }
+// .main-circle__cover {
+//   $duration: 10;
+//   width: 50%;
+//   height: 50%;
+//   position: absolute;
+//   // border: 1px solid red;
+//   // background-color:bisque;
+//   background-color: orange;
+//   // opacity: .5;
+//   border-top-left-radius: 100%;
+//   transform-origin: bottom right;
+//   animation-duration: calc($duration * 1s);
+//   animation-fill-mode: forwards;
+//   animation-timing-function: linear;
+
+//   rotate: 0deg;
+//   isolation: isolate;
+
+//   &--first.active {
+//     animation-name: first;
+//   }
+//   &--second.active {
+//     animation-name: second;
+//   }
+//   &--third.active {
+//     animation-name: third;
+//   }
+//   &--fourth.active {
+//     animation-name: fourth;
+//     &::after {
+//       content: "";
+//       width: 15px;
+//       height: 15px;
+//       position: absolute;
+//       background-color: red;
+//       top: 5px;
+//       right: 0px;
+//       border-radius: 50%;
+//       display: none;
+//       // z-index: 100;
+//     }
+//   }
+//   &--first-cover {
+//     rotate: 90deg;
+//     opacity: 0;
+
+//     z-index: 1;
+//     animation-delay: calc($duration/ 2 * 1s);
+//     animation-duration: 0s;
+//     background-color: red;
+// }
+
+// &--first-cover.active{
+    
+//     animation-name: first-cover;
+    
+//   }
+//   &--second-cover{
+//     animation-delay: calc($duration/ 2 * 1s);
+//     animation-duration: calc($duration / 2 * 1s);
+//     background-color: blue;
+    
+// }
+// &--second-cover.active {
+//       animation-name: second-cover;
+   
+//     // z-index: 1;
+//   }
+// }
+
+// @keyframes first {
+//   // from{
+//   //     rotate: 0deg;
+//   // }
+//   to {
+//     rotate: 90deg;
+//   }
+// }
+// @keyframes second {
+//   // from{
+//   //     rotate: 0deg;
+//   // }
+//   to {
+//     rotate: 180deg;
+//   }
+// }
+// @keyframes third {
+//   // from{
+//   //     rotate: 0deg;
+//   // }
+//   to {
+//     rotate: 270deg;
+//   }
+// }
+// @keyframes fourth {
+//   // from{
+//   //     rotate: 0deg;
+//   // }
+//   to {
+//     rotate: 360deg;
+//   }
+// }
+// @keyframes first-cover {
+//   // from{
+//   //     rotate: 0deg;
+//   // }
+//   to {
+//     // rotate: 90deg;
+//     opacity: 1;
+//   }
+// }
+// @keyframes second-cover {
+//   // from{
+//   //     rotate: 0deg;
+//   // }
+//   to {
+//     rotate: 90deg;
+//     // opacity: 1;
+//   }
+// }
+
+//-------------------------------------
