@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import audio from "./assets/beep-6-96243.mp3";
 import { Minus, Plus } from "./assets/images";
-import Button from "./components/Button";
 
 
 const App = () => {
@@ -60,23 +59,7 @@ const App = () => {
     
   };
 
-  const sessionIncrement = () => {
-    hasStarted ||
-      (sessionLength < 3600 && setSessionLength(sessionLength + 60));
-  }
-  const sessionDecrement = () => {
-    hasStarted ||
-      (sessionLength > 60 && setSessionLength(sessionLength - 60));
-  }
-  const breakIncrement = () => {
-    hasStarted ||
-      (breakLength < 3600 && setBreakLength(breakLength + 60));
-  }
-  const breakDecrement = () => {
-    hasStarted ||
-      (breakLength > 60 && setBreakLength(breakLength - 60));
-  }
-
+ 
   useEffect(
     () => {
       if (timer === 0) {
